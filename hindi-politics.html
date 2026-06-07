@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politics News - NEWS Akkshu</title>
+    <!-- AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298712782505661" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,6 +25,7 @@
         .news-text { color: #333; line-height: 1.6; font-size: 18px; }
         .delete-btn { display: none; position: absolute; right: 20px; top: 20px; background: #ff3333; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .back-btn { display: inline-block; margin-bottom: 20px; color: #0B3054; text-decoration: none; font-weight: bold; font-family: 'Poppins', sans-serif; }
+        .ad-container { margin: 15px 0; display: block; }
     </style>
 </head>
 <body>
@@ -50,7 +53,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
@@ -132,7 +134,18 @@
                     <button class="delete-btn" onclick="deleteNews('${doc.id}')">Delete</button>
                     <h2>${news.heading}</h2>
                     <div class="date-time">🕒 ${news.time}</div>
+                    
+                    <div class="ad-container">
+                        <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-ad-full-width-responsive="true"></ins>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+                    </div>
+
                     <div class="news-text">${news.details.replace(/\n/g, '<br>')}</div>
+                    
+                    <div class="ad-container">
+                        <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-ad-full-width-responsive="true"></ins>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+                    </div>
                 `;
                 newsContainer.appendChild(card);
             });
