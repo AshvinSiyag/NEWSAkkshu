@@ -8,166 +8,58 @@
     <!-- Google AdSense Script -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298712782505661" crossorigin="anonymous"></script>
 
-    <!-- Google Fonts for stylish Hindi, Gujarati, and English typography -->
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fc;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        /* Main Container */
-        .splash-container {
-            text-align: center;
-            background: #ffffff;
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            max-width: 600px;
-            width: 90%;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        /* Logo Styling */
-        .logo-box img {
-            width: 250px;
-            max-width: 100%;
-            margin-bottom: 30px;
-            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.1));
-        }
-
-        .title-text {
-            font-size: 18px;
-            color: #555;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        /* Buttons Container */
-        .language-options {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Button Common Styling */
-        .lang-btn {
-            text-decoration: none;
-            font-family: 'Hind', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            padding: 15px 35px;
-            border-radius: 50px;
-            color: white;
-            transition: all 0.3s ease;
-            display: inline-block;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            min-width: 220px;
-        }
-
-        /* Hindi Button (Logo Red Color Theme) */
-        .btn-hindi {
-            background: linear-gradient(135deg, #A81C21, #d32f2f);
-        }
-        .btn-hindi:hover {
-            background: linear-gradient(135deg, #d32f2f, #A81C21);
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(168, 28, 33, 0.4);
-        }
-
-        /* Gujarati Button (Logo Navy Blue Theme) */
-        .btn-gujarati {
-            background: linear-gradient(135deg, #0B3054, #15508a);
-        }
-        .btn-gujarati:hover {
-            background: linear-gradient(135deg, #15508a, #0B3054);
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(11, 48, 84, 0.4);
-        }
-
-        /* Footer / Maker Styling */
-        .maker-credit {
-            margin-top: 50px;
-            font-size: 14px;
-            color: #777;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 400;
-        }
-
-        .maker-credit span {
-            color: #cf9b16; /* Gold color from your logo */
-            font-weight: 700;
-            font-size: 16px;
-            letter-spacing: 1.5px;
-        }
-
-        /* Fade In Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile View Adjustment */
-        @media (max-width: 480px) {
-            .language-options {
-                flex-direction: column;
-            }
-            .lang-btn {
-                width: 100%;
-            }
-            .logo-box img {
-                width: 200px;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fc; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: #333; }
+        .splash-container { text-align: center; background: #ffffff; padding: 50px 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); max-width: 600px; width: 90%; }
+        .logo-box img { width: 250px; cursor: pointer; margin-bottom: 30px; }
+        .title-text { font-size: 18px; color: #555; margin-bottom: 30px; font-weight: 600; }
+        .language-options { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .lang-btn { text-decoration: none; font-family: 'Hind', sans-serif; font-size: 22px; font-weight: 700; padding: 15px 35px; border-radius: 50px; color: white; transition: all 0.3s ease; display: inline-block; min-width: 220px; }
+        .btn-hindi { background: linear-gradient(135deg, #A81C21, #d32f2f); }
+        .btn-gujarati { background: linear-gradient(135deg, #0B3054, #15508a); }
+        .maker-credit { margin-top: 50px; font-size: 14px; color: #777; text-transform: uppercase; font-weight: 400; }
     </style>
 </head>
 <body>
 
     <div class="splash-container">
-        <!-- Logo Section -->
         <div class="logo-box">
-            <img src="1000678376.png" alt="NEWS Akkshu Logo">
+            <!-- 5-Click Admin Access -->
+            <img src="1000678376.png" alt="NEWS Akkshu Logo" onclick="countClicks()" id="logo">
         </div>
 
-        <div class="title-text">
-            अपनी भाषा चुनें / તમારી ભાષા પસંદ કરો
-        </div>
+        <div class="title-text">अपनी भाषा चुनें / તમારી ભાષા પસંદ કરો</div>
 
-        <!-- Language Options -->
         <div class="language-options">
-            <!-- Hindi Option -->
-            <a href="hindi.html" class="lang-btn btn-hindi">
-                हिंदी ख़बर
-            </a>
-            
-            <!-- Gujarati Option -->
-            <a href="gujarati.html" class="lang-btn btn-gujarati">
-                ગુજરાતી સમાચાર
-            </a>
+            <a href="hindi.html" class="lang-btn btn-hindi">हिंदी ख़बर</a>
+            <a href="gujarati.html" class="lang-btn btn-gujarati">ગુજરાતી સમાચાર</a>
         </div>
     </div>
 
-    <!-- Website Maker Name -->
-    <div class="maker-credit">
-        Website Made By <br>
-        <span>Ashvin Siyag</span>
-    </div>
+    <div class="maker-credit">Website Made By <span>Ashvin Siyag</span></div>
 
+    <script>
+        // Admin Access Logic (5 Clicks)
+        let clickCount = 0;
+        function countClicks() {
+            clickCount++;
+            if (clickCount === 5) {
+                clickCount = 0;
+                openAdmin();
+            }
+        }
+
+        function openAdmin() {
+            const password = prompt("Admin Password:");
+            if (password === "Akkshu@Admin") {
+                window.location.href = "admin.html"; // सुनिश्चित करें कि admin.html फाइल आपके फोल्डर में है
+            } else {
+                alert("Galat Password!");
+            }
+        }
+    </script>
 </body>
 </html>
