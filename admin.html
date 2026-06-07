@@ -21,10 +21,17 @@
         <textarea id="newsDetails" rows="6" placeholder="Full News Details..." required></textarea>
         
         <select id="newsCategory">
+            <!-- Hindi Categories -->
             <option value="hindiEntertainmentNews">Hindi Entertainment</option>
             <option value="hindiPoliticsNews">Hindi Politics</option>
             <option value="hindiSportsNews">Hindi Sports</option>
             <option value="hindiCrimeNews">Hindi Crime</option>
+            
+            <!-- Gujarati Categories -->
+            <option value="gujaratiEntertainmentNews">Gujarati Entertainment (ગુજરાતી મનોરંજન)</option>
+            <option value="gujaratiPoliticsNews">Gujarati Politics (ગુજરાતી રાજકારણ)</option>
+            <option value="gujaratiSportsNews">Gujarati Sports (ગુજરાતી રમતગમત)</option>
+            <option value="gujaratiCrimeNews">Gujarati Crime (ગુજરાતી ક્રાઈમ)</option>
         </select>
         
         <button type="submit">Publish News</button>
@@ -55,7 +62,7 @@
             details: document.getElementById('newsDetails').value,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then(() => {
-            alert("News Published Successfully!");
+            alert("News Published Successfully in " + cat + "!");
             document.getElementById('newsForm').reset();
         }).catch(err => alert("Error: " + err));
     });
