@@ -4,80 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entertainment News - NEWS Akkshu</title>
+    <!-- AdSense Script -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298712782505661" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Hind', sans-serif; background-color: #f4f4f4; padding: 20px; }
-        .admin-box { display: none; background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
-        .news-card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; cursor: pointer; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .news-card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .news-image { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
-        .full-news { display: none; margin-top: 10px; color: #555; }
-        .delete-btn { background: #d32f2f; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+        .full-news { display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; color: #333; line-height: 1.6; }
+        .read-more { color: #d32f2f; font-weight: bold; margin-top: 10px; display: block; }
+        .ad-container { margin: 15px 0; display: block; }
     </style>
 </head>
 <body>
 
-    <header style="text-align:center;">
-        <img src="1000678376.png" width="180" onclick="checkPassword()" style="cursor:pointer;">
-        <h1>मनोरंजन (Entertainment News)</h1>
-    </header>
-
-    <div class="admin-box" id="adminBox">
-        <form id="newsForm">
-            <input type="text" id="newsHeading" placeholder="Heading..." style="width:100%; padding:10px; margin-bottom:10px;">
-            <input type="text" id="newsImage" placeholder="Image URL..." style="width:100%; padding:10px; margin-bottom:10px;">
-            <textarea id="newsDetails" rows="4" placeholder="Full Details..." style="width:100%; padding:10px; margin-bottom:10px;"></textarea>
-            <button type="submit">Publish News</button>
-            <button type="button" onclick="logout()">Log Out</button>
-        </form>
-    </div>
-
+<div class="container">
+    <a href="index.html">← वापस जाएं</a>
     <div id="newsContainer"></div>
+</div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script>
-        // (Firebase Config यहाँ पहले वाला ही रहेगा)
-        const firebaseConfig = { /* ...config... */ }; 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script>
+    const firebaseConfig = { 
+        apiKey: "AIzaSyAOTuJcjYGPld5wZYVPHK0jpXKAh561lVU",
+        authDomain: "news-akkshu.firebaseapp.com",
+        projectId: "news-akkshu",
+        storageBucket: "news-akkshu.firebasestorage.app",
+        messagingSenderId: "735024392453",
+        appId: "1:735024392453:web:30f8a1f0832ff36b1fef6c" 
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        // Publish News (Image URL ke saath)
-        document.getElementById('newsForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            db.collection("hindiEntertainmentNews").add({
-                heading: document.getElementById('newsHeading').value,
-                image: document.getElementById('newsImage').value,
-                details: document.getElementById('newsDetails').value,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => location.reload());
+    db.collection("hindiEntertainmentNews").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+        const container = document.getElementById('newsContainer');
+        container.innerHTML = '';
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const shortDetails = data.details ? data.details.substring(0, 100) + "..." : "";
+            
+            container.innerHTML += `
+                <div class="news-card" onclick="toggleNews('${doc.id}')">
+                    ${data.image ? `<img src="${data.image}" class="news-image">` : ''}
+                    <h2>${data.heading}</h2>
+                    
+                    <!-- Ad 1: Headline ke niche -->
+                    <div class="ad-container">
+                        <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-ad-full-width-responsive="true" data-ad-client="ca-pub-4298712782505661"></ins>
+                    </div>
+
+                    <p id="short-${doc.id}">${shortDetails}</p>
+                    
+                    <div id="full-${doc.id}" class="full-news">
+                        <p>${data.details}</p>
+                        <!-- Ad 2: News khulne par -->
+                        <div class="ad-container">
+                            <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-ad-full-width-responsive="true" data-ad-client="ca-pub-4298712782505661"></ins>
+                        </div>
+                    </div>
+                    <span class="read-more">पूरा पढ़ें (Read More)</span>
+                </div>`;
+            (adsbygoogle = window.adsbygoogle || []).push({});
         });
+    });
 
-        // Load News
-        db.collection("hindiEntertainmentNews").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-            const container = document.getElementById('newsContainer');
-            container.innerHTML = '';
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                container.innerHTML += `
-                    <div class="news-card" onclick="toggleNews('${doc.id}')">
-                        ${sessionStorage.getItem('isAdmin') === 'true' ? `<button class="delete-btn" onclick="deleteNews('${doc.id}')">Delete</button>` : ''}
-                        <img src="${data.image}" class="news-image">
-                        <h2>${data.heading}</h2>
-                        <div id="full-${doc.id}" class="full-news"><p>${data.details}</p></div>
-                    </div>`;
-            });
-        });
-
-        function toggleNews(id) {
-            const el = document.getElementById('full-' + id);
-            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-        }
-        
-        function checkPassword() { if(prompt("Password:") === "Akkshu@Admin") { sessionStorage.setItem('isAdmin', 'true'); location.reload(); } }
-        function logout() { sessionStorage.removeItem('isAdmin'); location.reload(); }
-        function deleteNews(id) { event.stopPropagation(); db.collection("hindiEntertainmentNews").doc(id).delete(); }
-    </script>
+    function toggleNews(id) {
+        const full = document.getElementById('full-' + id);
+        const short = document.getElementById('short-' + id);
+        full.style.display = (full.style.display === 'block') ? 'none' : 'block';
+        short.style.display = (full.style.display === 'block') ? 'none' : 'block';
+    }
+</script>
 </body>
 </html>
