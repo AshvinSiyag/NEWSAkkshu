@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindi Khabar - NEWS Akkshu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif; background-color: #f8f9fc;
+            display: flex; flex-direction: column; align-items: center; padding: 40px 20px;
+        }
+        .container {
+            background: #ffffff; padding: 40px; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); max-width: 800px; width: 100%;
+            text-align: center; animation: fadeIn 0.8s ease-in-out;
+        }
+        .logo-box img { width: 200px; margin-bottom: 20px; }
+        h2 { font-family: 'Hind', sans-serif; color: #d32f2f; margin-bottom: 30px; font-size: 28px; }
+        
+        .category-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+        }
+        .cat-btn {
+            text-decoration: none; font-family: 'Hind', sans-serif; font-size: 20px; font-weight: 600;
+            padding: 20px; border-radius: 12px; color: white; background: #0B3054; /* Navy Blue */
+            transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .cat-btn span { font-size: 14px; font-weight: 400; font-family: 'Poppins', sans-serif; opacity: 0.8; margin-top: 5px; }
+        .cat-btn:hover {
+            background: #A81C21; /* Red on hover */
+            transform: translateY(-5px); box-shadow: 0 8px 20px rgba(168, 28, 33, 0.4);
+        }
+        
+        .back-btn {
+            display: inline-block; margin-top: 30px; padding: 10px 25px; border-radius: 50px;
+            background: #eee; color: #333; text-decoration: none; font-weight: 600; transition: 0.3s;
+        }
+        .back-btn:hover { background: #ddd; }
+
+        .maker-credit { margin-top: 40px; font-size: 14px; color: #777; text-transform: uppercase; font-weight: 400; text-align: center; }
+        .maker-credit span { color: #cf9b16; font-weight: 700; font-size: 16px; letter-spacing: 1.5px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-box">
+            <img src="1000678376.png" alt="NEWS Akkshu">
+        </div>
+
+        <h2>हिंदी ख़बर - केटेगरी चुनें</h2>
+
+        <div class="category-grid">
+                    <div class="category-grid">
+            <a href="hindi-sports.html" class="cat-btn">खेल <span>(Sports)</span></a>
+            <a href="hindi-crime.html" class="cat-btn">अपराध <span>(Crime)</span></a>
+            <a href="hindi-politics.html" class="cat-btn">राजनीति <span>(Politics)</span></a>
+            <a href="hindi-entertainment.html" class="cat-btn">मनोरंजन <span>(Entertainment)</span></a>
+        </div>
+
+
+        <a href="index.html" class="back-btn">← पीछे जाएं (Back to Home)</a>
+    </div>
+
+    <div class="maker-credit">
+        Website Made By <br>
+        <span>Ashvin Siyag</span>
+    </div>
+
+</body>
+</html>

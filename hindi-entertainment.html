@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment News - NEWS Akkshu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Hind', sans-serif; background-color: #f4f4f4; padding: 20px; }
+        header { text-align: center; margin-bottom: 30px; position: relative; }
+        header img { width: 180px; }
+        h1 { color: #d32f2f; margin-top: 10px; font-family: 'Poppins', sans-serif; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .admin-box { display: none; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 5px solid #0B3054; }
+        .admin-box h3 { color: #0B3054; margin-bottom: 15px; font-family: 'Poppins', sans-serif; }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Hind', sans-serif; font-size: 16px; }
+        .publish-btn { background: #d32f2f; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .publish-btn:hover { background: #A81C21; }
+        .news-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; position: relative; }
+        .news-card h2 { color: #d32f2f; font-size: 22px; margin-bottom: 10px; }
+        .date-time { color: #777; font-size: 13px; margin-bottom: 15px; font-family: 'Poppins', sans-serif; }
+        .news-text { color: #333; line-height: 1.6; font-size: 18px; }
+        .delete-btn { display: none; position: absolute; right: 20px; top: 20px; background: #ff3333; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #0B3054; text-decoration: none; font-weight: bold; font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="1000678376.png" alt="NEWS Akkshu Logo" ondblclick="checkPassword()" style="cursor: pointer;" title="News Akkshu">
+        <h1>मनोरंजन (Entertainment News)</h1>
+    </header>
+
+    <div class="container">
+        <a href="hindi.html" class="back-btn">← पीछे जाएं</a>
+
+        <div class="admin-box" id="adminBox">
+            <h3>🔒 Live Admin Panel</h3>
+            <form id="entertainmentForm">
+                <input type="text" id="newsHeading" placeholder="न्यूज़ की हेडलाइन लिखें..." required>
+                <textarea id="newsDetails" rows="5" placeholder="पूरी ख़बर यहाँ लिखें..." required></textarea>
+                <button type="submit" class="publish-btn">ख़बर पब्लिश करें</button>
+            </form>
+            <button onclick="logoutAdmin()" style="background:#333; margin-top:10px;" class="publish-btn">Log Out</button>
+        </div>
+
+        <div id="newsContainer">
+            <p style="text-align:center; color:#777;">न्यूज़ लोड हो रही है...</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOTuJcjYGPld5wZYVPHK0jpXKAh561lVU",
+            authDomain: "news-akkshu.firebaseapp.com",
+            projectId: "news-akkshu",
+            storageBucket: "news-akkshu.firebasestorage.app",
+            messagingSenderId: "735024392453",
+            appId: "1:735024392453:web:30f8a1f0832ff36b1fef6c"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const entertainmentForm = document.getElementById('entertainmentForm');
+        const newsContainer = document.getElementById('newsContainer');
+        const adminBox = document.getElementById('adminBox');
+        
+        const SECRET_PASSWORD = "Akkshu@Admin"; 
+
+        if(sessionStorage.getItem('isAdmin') === 'true') { showAdminPanel(); }
+
+        function checkPassword() {
+            const userInput = prompt("Admin Password daalein:");
+            if (userInput === SECRET_PASSWORD) {
+                sessionStorage.setItem('isAdmin', 'true');
+                showAdminPanel();
+                alert("Welcome! Admin Panel Open ho gya hai.");
+            } else if (userInput !== null) { alert("Galat Password!"); }
+        }
+
+        function showAdminPanel() {
+            adminBox.style.display = 'block';
+            updateDeleteButtons();
+        }
+        function logoutAdmin() { sessionStorage.removeItem('isAdmin'); window.location.reload(); }
+        function updateDeleteButtons() {
+            if(sessionStorage.getItem('isAdmin') === 'true') {
+                document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
+            }
+        }
+
+        entertainmentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const heading = document.getElementById('newsHeading').value;
+            const details = document.getElementById('newsDetails').value;
+            const now = new Date();
+            const timeString = now.toLocaleDateString('hi-IN') + ' - ' + now.toLocaleTimeString('hi-IN');
+
+            db.collection("hindiEntertainmentNews").add({
+                heading: heading,
+                details: details,
+                time: timeString,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                secretPasscode: "Akkshu@Admin"
+            }).then(() => {
+                entertainmentForm.reset();
+                alert("ख़बर सफलतापूर्वक पब्लिश हो गई!");
+            }).catch((error) => { alert("Error: " + error.message); });
+        });
+
+        window.deleteNews = function(id) {
+            if(confirm("क्या आप सच में ये न्यूज़ डिलीट करना चाहते हैं?")) {
+                db.collection("hindiEntertainmentNews").doc(id).delete();
+            }
+        }
+
+        db.collection("hindiEntertainmentNews").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+            newsContainer.innerHTML = '';
+            if (querySnapshot.empty) {
+                newsContainer.innerHTML = '<p style="text-align:center; color:#777;">अभी तक कोई ख़बर नहीं डाली गई है।</p>';
+                return;
+            }
+            querySnapshot.forEach((doc) => {
+                const news = doc.data();
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <button class="delete-btn" onclick="deleteNews('${doc.id}')">Delete</button>
+                    <h2>${news.heading}</h2>
+                    <div class="date-time">🕒 ${news.time}</div>
+                    <div class="news-text">${news.details.replace(/\n/g, '<br>')}</div>
+                `;
+                newsContainer.appendChild(card);
+            });
+            updateDeleteButtons();
+        });
+    </script>
+</body>
+</html>
